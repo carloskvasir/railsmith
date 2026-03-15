@@ -1,0 +1,35 @@
+{
+  "name": "Rails AI DevContainer",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "castwide.solargraph",
+        "bitwarden.bitwarden",
+        "mhutchie.git-graph"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true
+      }
+    },
+    "jetbrains": {
+      "plugins": [
+        "org.intellij.plugins.ruby",
+        "com.intellij.database"
+      ]
+    }
+  },
+  "forwardPorts": [3000, 5432, 6379],
+  "postCreateCommand": "npm install -g @anthropic-ai/claude-code @bitwarden/cli && gem install rails",
+  "remoteUser": "vscode"
+}
