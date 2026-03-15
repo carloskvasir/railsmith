@@ -1,6 +1,10 @@
 # Estágio de Build para CLIs e Ferramentas de Performance
 FROM ruby:4.0.0-slim AS builder
 
+LABEL org.opencontainers.image.version="0.1.0-alpha"
+LABEL org.opencontainers.image.title="RailSmith DevContainer"
+LABEL org.opencontainers.image.description="RailSmith: AI-Native & High-Performance Ruby 4.0.0 Vanguard featuring ZJIT, Ruby::Box, Claude Code & Rust Toolchain"
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Instala ferramentas de build básicas
