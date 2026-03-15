@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     # A mágica do Build Instantâneo acontece aqui:
-    image: ghcr.io/carloskvasir/railsmith-base:latest
+    image: ghcr.io/carloskvasir/railsmith:latest
     volumes:
       - ../:/workspace:cached
     # Mantém o container rodando para o VS Code / Codespaces se conectar
