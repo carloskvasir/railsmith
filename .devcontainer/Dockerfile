@@ -1,11 +1,24 @@
-# Usa uma imagem oficial leve e sempre a mais recente do Ruby
-FROM ruby:slim
+# Estágio de Build para CLIs
+FROM ruby:3.4-slim AS builder
 
-# Evita interações travando o apt-get
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Instala apenas o necessário para baixar e instalar os pacotes globais do npm
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    nodejs \
+    npm \
+    curl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Instala as ferramentas globais (CLI)
+RUN npm install -g @bitwarden/cli @anthropic-ai/claude-code
+
+# Estágio Final / Runtime
+FROM ruby:3.4-slim
+
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Instalação unificada de dependências de sistema (Infra Forge)
-# Inclui dependências de build, banco de dados (PG), libvips (Rails ActiveStorage) e NodeJS
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     bash \
@@ -16,12 +29,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     redis-tools \
     libvips \
     nodejs \
-    npm \
     sudo \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Instala as ferramentas globais (CLI)
-RUN npm install -g @bitwarden/cli @anthropic-ai/claude-code
+# Copia os binários e bibliotecas do nó do Node.js compilados no estágio anterior
+COPY --from=builder /usr/local/lib/node_modules /usr/local/lib/node_modules
+COPY --from=builder /usr/local/bin/claude /usr/local/bin/claude
+COPY --from=builder /usr/local/bin/bw /usr/local/bin/bw
 
 # Otimização: Já deixa o Rails e o Bundler pré-instalados na imagem
 RUN gem update --system && gem install bundler rails
