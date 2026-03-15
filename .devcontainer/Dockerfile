@@ -1,5 +1,5 @@
-# Usa uma imagem oficial leve e enxuta, baseada em slim
-FROM ruby:3.3-slim
+# Usa uma imagem oficial leve e sempre a mais recente do Ruby
+FROM ruby:slim
 
 # Evita interações travando o apt-get
 ENV DEBIAN_FRONTEND=noninteractive
