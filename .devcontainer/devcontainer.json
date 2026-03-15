@@ -1,14 +1,8 @@
 {
-  "name": "Rails AI DevContainer",
+  "name": "RailSmith (Fast Boot)",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
   "workspaceFolder": "/workspace",
-  "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "lts"
-    }
-  },
   "customizations": {
     "vscode": {
       "extensions": [
@@ -30,6 +24,6 @@
     }
   },
   "forwardPorts": [3000, 5432, 6379],
-  "postCreateCommand": "npm install -g @anthropic-ai/claude-code @bitwarden/cli && gem install rails",
+  "postCreateCommand": "bash scripts/bootstrap.sh",
   "remoteUser": "vscode"
 }

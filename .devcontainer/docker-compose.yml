@@ -2,11 +2,8 @@ version: '3.8'
 
 services:
   app:
-    build: 
-      context: .
-      dockerfile: Dockerfile
-      args:
-        VARIANT: 3.3-bookworm
+    # A mágica do Build Instantâneo acontece aqui:
+    image: ghcr.io/carloskvasir/railsmith:latest
     volumes:
       - ../:/workspace:cached
     # Mantém o container rodando para o VS Code / Codespaces se conectar
